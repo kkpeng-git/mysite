@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}登陆{% endblock %}
+{% block nav_home_active %}active{% endblock %}
+
+{% block conetent %}
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-4 col-xs-offset-4">
+        {% if not user.is_authenticated %}
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <div class="panel-title">
+                <h3 class="panel-title">登陆</h3>
+              </div>
+            </div>
+            <div class="panel-body">
+              <form action="" method="post">
+                {% csrf_token %}
+                {# 第一种方法 #}
+                {#{{ login_form }}#}
+                {# 第二种方法  这两种的区别： 因为官方会默认在label后面加上冒号。 第二种方法可以再次进行自定义 #}
+                {% for field in login_form %}
+                  <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                  {{ field }}
+                  <p class="text-danger">{{ field.errors.as_text }}</p>
+                {% endfor %}
+                <span class="text-danger">{{ login_form.non_field_errors }}</span>{#non_field_errors 用于返回用户名或密码错误字样#}
+                <div class="clearfix"></div>
+                <a class="pull-left" href="{% url 'forget_password' %}">忘记密码？</a>
+                <input type="submit" value="登陆" class="btn btn-primary pull-right">
+              </form>
+            </div>
+          </div>
+        {% else %}
+          <span>已登录，跳转到首页...</span>
+          <script type="text/javascript">
+            window.location.href = '/';
+          </script>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}

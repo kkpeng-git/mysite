@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}错误{% endblock %}
+{% block nav_home_active %}active{% endblock %}
+
+{% block conetent %}
+    {{ message }}，<a href="{{ redirect_to }}">返回</a>
+{% endblock %}
